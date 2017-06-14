@@ -1,0 +1,100 @@
+{% extends "P4LouvreTicketsBundle::layout.html.twig" %}
+{% set bookingPage = true %}
+
+{% block title %}{{ parent () }} - Détails de la commande{% endblock %}
+
+{% block content %}
+
+    <div class="inner cover">
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <h1>Détails de la commande</h1>
+
+        <div class="lead" style="text-align: center;">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            {{ form_errors(form) }}
+
+            <p style="text-align: center; font-size: 1.5em;">Visiteurs</p><br />
+
+            {% for visitor in form.visitors %}
+
+            <div class="form-group">
+                {{ form_label(visitor.visitorFirstName, "Prénom du visiteur * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                {{ form_errors(visitor.visitorFirstName) }}
+                <div class="col-sm-7">
+                    {{ form_widget(visitor.visitorFirstName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(visitor.visitorName, "Nom du visiteur * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                {{ form_errors(visitor.visitorName) }}
+                <div class="col-sm-7">
+                    {{ form_widget(visitor.visitorName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(visitor.visitorDob, "Date de naissance * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                {{ form_errors(visitor.visitorDob) }}
+                <div class="col-sm-4">
+                    {{ form_widget(visitor.visitorDob, {'attr': {'class': 'form-control',
+                        'class': 'js-datepicker-dob',
+                        'style': 'color: black;'
+                    }}) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(visitor.visitorCountry, "Pays de résidence * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                {{ form_errors(visitor.visitorCountry) }}
+                <div class="col-sm-7">
+                    {{ form_widget(visitor.visitorCountry, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(visitor.reduceTicket, "Tarif réduit :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
+                {{ form_errors(visitor.reduceTicket) }}
+                <div class="col-sm-1">
+                    {{ form_widget(visitor.reduceTicket, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-6">
+                    <span style="font-size: 0.85em;"><em>Attention, un justificatif sera exigé<br />à l'entrée du musée.</em></span>
+                </div>
+            </div>
+
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+
+            {% endfor %}
+
+            <br />
+            <p style="text-align: center; font-size: 0.75em; font-style: italic; text-decoration: underline;">Tous les champs signalés par un astérisque doivent impérativement être renseignés.</p>
+            <br />
+
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="btn btn-primary" style="font-weight: bold; font-size: 1em;">&nbsp;&nbsp;&nbsp;&nbsp;Valider la commande&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+
+            {{ form_rest(form) }}
+
+            {{ form_end(form) }}
+
+            <div class="row">
+                <p style="text-align: center;">
+                    <a href="{{ path('louvre_booking_cancel', {'id': bookingId}) }}" class="btn btn-lg btn-default">Annuler la commande</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

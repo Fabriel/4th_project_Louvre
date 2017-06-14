@@ -1,0 +1,28 @@
+{% extends "P4LouvreTicketsBundle::layout.html.twig" %}
+{% set infosPage = true %}
+
+{% block title %}{{ parent() }} - Informations pratiques{% endblock %}
+
+{% block content %}
+    <div class="inner cover">
+        <h1 class="cover-heading">Informations pratiques</h1>
+        <p class="lead">&nbsp;&nbsp;Le musée est ouvert tous les jours de 09h00 à 18h00 (21h45 le mercredi et le vendredi),
+            et est fermé le mardi et les 1er mai, 1er novembre et 25 décembre.<br/>
+            &nbsp;&nbsp;Le tarif "journée" est de :</p>
+            <ul class="lead" id="infos">
+                <li>16 € par adulte (à partir de 12 ans)&nbsp;;</li>
+                <li>12 € par adulte de plus de 60 ans&nbsp;;</li>
+                <li>10 € par adulte bénéficiant du tarif réduit (titulaire d'une carte d'étudiant, militaire, employé
+                    du musée ou du Ministère de la Culture - justificatif à présenter à l'entrée du musée)&nbsp;;</li>
+                <li>&nbsp;&nbsp;8 € par enfant (de 4 à 12 ans - gratuit pour les moins de 4 ans).</li>
+            </ul>
+        <p class="lead">
+            &nbsp;&nbsp;Il est possible d'acheter un billet "demi-journée", valable uniquement à partir de 14h00, dont le tarif
+              est égal à la moitié du tarif "journée".<br />
+            &nbsp;&nbsp;Enfin, l'accès au musée le dimanche ne peut se faire qu'en achetant le billet directement sur place.
+        </p>
+        <p>
+            <a href="{{ path('louvre_booking') }}" class="btn btn-lg btn-default">Achetez vos billets</a>
+        </p>
+    </div>
+{% endblock %}

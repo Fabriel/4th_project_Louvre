@@ -1,0 +1,73 @@
+{% extends "P4LouvreTicketsBundle::layout.html.twig" %}
+{% set bookingPage = true %}
+
+{% block title %}{{ parent () }} - Récapitulatif{% endblock %}
+
+{% block content %}
+
+    <div class="inner cover">
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <h1>Récapitulatif de votre commande</h1>
+
+        <br />
+
+        <div class="lead" id="summary">
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-5 labelSum" style="text-align: right;">
+                    <strong>Date de la visite :</strong>
+                </div>
+                <div class="col-sm-5">
+                    {{ booking.ticketDate|date("d/m/Y") }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-5 labelSum" style="text-align: right;">
+                    <strong>Nombre de visiteurs :</strong>
+                </div>
+                <div class="col-sm-5">
+                    {{ booking.totalNbTickets }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-5 labelSum" style="text-align: right;">
+                    <strong>Référence de commande :</strong>
+                </div>
+                <div class="col-sm-5">
+                    {{ booking.commandReference }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-5 labelSum" style="text-align: right;">
+                    <strong>Prix à payer :</strong>
+                </div>
+                <div class="col-sm-5">
+                    {{ booking.totalPrice }}&nbsp;€
+                </div>
+            </div>
+            <br />
+            <div class="row" style="text-align: center;">
+                <a href="" class="btn btn-primary" style="font-size: 1.1em; font-weight: bold;">&nbsp;&nbsp;Procéder au paiement&nbsp;&nbsp;</a>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <p style="text-align: center;">
+                    <a href="{{ path('louvre_booking_cancel', {'id': bookingId}) }}" class="btn btn-lg btn-default">Annuler la commande</a>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

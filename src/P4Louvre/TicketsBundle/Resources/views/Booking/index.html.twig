@@ -1,0 +1,27 @@
+{% extends "P4LouvreTicketsBundle::layout.html.twig" %}
+{% set homePage = true %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+{% block content %}
+
+    <div class="inner cover">
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <h1 class="cover-heading">Bienvenue</h1>
+        <p class="lead">&nbsp;&nbsp;Ce site vous permet d'acheter directement en ligne vos billets d'entrée au Musée du Louvre,
+            afin de vous éviter de devoir patienter dans les files d'attente, parfois très longues.<br/>
+            &nbsp;&nbsp;Vous pourrez également retrouver toutes les informations pratiques (jours et heures d'ouverture du musée, tarifs
+            des billets et conditions) sur <a href="{{ path('louvre_infos') }}"><em><u>cette page</u></em></a>.<br/>
+            &nbsp;&nbsp;À très bientôt !</p>
+        <p>
+            <a href="{{ path('louvre_booking') }}" class="btn btn-lg btn-default">Achetez vos billets</a>
+        </p>
+    </div>
+
+{% endblock %}
