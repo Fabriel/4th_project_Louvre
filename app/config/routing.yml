@@ -1,3 +1,3 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+p4_louvre_tickets:
+    resource: "@P4LouvreTicketsBundle/Controller/P4LouvreController.php"
+    type:     annotation
