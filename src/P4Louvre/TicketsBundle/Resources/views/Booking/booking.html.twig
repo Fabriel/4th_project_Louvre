@@ -14,7 +14,7 @@
             {{ form_errors(form) }}
 
             <div class="form-group">
-                <span style="text-align: center; font-size: 0.85em; font-style: italic;">{{ form_errors(form.ticketDate) }}</span>
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.ticketDate) }}</span>
                 {{ form_label(form.ticketDate, "Date de la visite :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
                 <div class="col-sm-4">
                     {{ form_widget(form.ticketDate, {'attr': {'class': 'form-control',
@@ -25,14 +25,15 @@
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.email) }}</span>
                 {{ form_label(form.email, "Adresse email :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(form.email) }}
                 <div class="col-sm-6">
                     {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.ticketType) }}</span>
                 {{ form_label(form.ticketType, "Type de billet(s) :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
                 {{ form_errors(form.ticketType) }}
                 <div class="col-sm-3">
@@ -43,8 +44,8 @@
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(form.totalNbTickets) }}</span>
                 {{ form_label(form.totalNbTickets, "Nombre total de billet(s) :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(form.totalNbTickets) }}
                 <div class="col-sm-2">
                     {{ form_widget(form.totalNbTickets, {'attr': {
                         'class': 'form-control',

@@ -39,7 +39,8 @@ class P4LouvreController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $booking->setTotalPrice(0);
-            $booking->setCommandReference('');
+            $ref = $this->randomStr(5);
+            $booking->setCommandReference($ref);
             $em->persist($booking);
             $em->flush();
 

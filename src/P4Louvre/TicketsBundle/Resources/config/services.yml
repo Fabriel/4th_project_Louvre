@@ -2,3 +2,7 @@ services:
 #    p4_louvre_tickets.example:
 #        class: P4Louvre\TicketsBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    p4_louvre_tickets.ticketprice:
+        class: P4Louvre\TicketsBundle\PriceCalculation\PriceCalculation
+        arguments:
+            - "@doctrine.orm.entity_manager"

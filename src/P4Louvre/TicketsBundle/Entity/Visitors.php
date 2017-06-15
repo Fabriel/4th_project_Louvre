@@ -3,6 +3,7 @@
 namespace P4Louvre\TicketsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use P4Louvre\TicketsBundle\Entity\Booking;
 
 /**
@@ -60,6 +61,8 @@ class Visitors
      * @var \DateTime
      *
      * @ORM\Column(name="visitorDob", type="datetime")
+     *
+     * @Assert\DateTime(message="Cette date n'est pas valide")
      */
     private $visitorDob;
 
@@ -67,6 +70,8 @@ class Visitors
      * @var string
      *
      * @ORM\Column(name="visitorCountry", type="string", length=10)
+     *
+     * @Assert\Country()
      */
     private $visitorCountry;
 

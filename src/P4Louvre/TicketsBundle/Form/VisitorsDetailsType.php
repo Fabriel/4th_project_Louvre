@@ -22,7 +22,8 @@ class VisitorsDetailsType extends AbstractType
             ->add('visitorName',        TextType::class)
             ->add('visitorDob',         DateType::Class, array(
                 'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy'
+                'format' => 'dd/MM/yyyy',
+                'invalid_message' => "Cette date n'est pas valide."
             ))
             ->add('visitorCountry',     CountryType::class, array(
                 'preferred_choices' => array(

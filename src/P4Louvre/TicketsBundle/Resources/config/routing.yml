@@ -1,3 +1,0 @@
-p4_louvre_tickets_homepage:
-    path:     /
-    defaults: { _controller: P4LouvreTicketsBundle:Default:index }

@@ -25,24 +25,24 @@
             {% for visitor in form.visitors %}
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(visitor.visitorFirstName) }}</span>
                 {{ form_label(visitor.visitorFirstName, "Prénom du visiteur * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(visitor.visitorFirstName) }}
                 <div class="col-sm-7">
                     {{ form_widget(visitor.visitorFirstName, {'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(visitor.visitorName) }}</span>
                 {{ form_label(visitor.visitorName, "Nom du visiteur * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(visitor.visitorName) }}
                 <div class="col-sm-7">
                     {{ form_widget(visitor.visitorName, {'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(visitor.visitorDob) }}</span>
                 {{ form_label(visitor.visitorDob, "Date de naissance * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(visitor.visitorDob) }}
                 <div class="col-sm-4">
                     {{ form_widget(visitor.visitorDob, {'attr': {'class': 'form-control',
                         'class': 'js-datepicker-dob',
@@ -52,16 +52,16 @@
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(visitor.visitorCountry) }}</span>
                 {{ form_label(visitor.visitorCountry, "Pays de résidence * :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(visitor.visitorCountry) }}
                 <div class="col-sm-7">
                     {{ form_widget(visitor.visitorCountry, {'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
 
             <div class="form-group">
+                <span style="text-align: center; font-size: 0.85em; font-style: italic; color: orange;">{{ form_errors(visitor.reduceTicket) }}</span>
                 {{ form_label(visitor.reduceTicket, "Tarif réduit :", {'label_attr': {'class': 'col-sm-5 control-label'}}) }}
-                {{ form_errors(visitor.reduceTicket) }}
                 <div class="col-sm-1">
                     {{ form_widget(visitor.reduceTicket, {'attr': {'class': 'form-control'}}) }}
                 </div>

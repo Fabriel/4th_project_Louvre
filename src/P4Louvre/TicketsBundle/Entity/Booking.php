@@ -4,7 +4,9 @@ namespace P4Louvre\TicketsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use P4Louvre\TicketsBundle\Entity\Visitors;
+use P4Louvre\TicketsBundle\Validator\VerifyDate;
 
 /**
  * Booking
@@ -40,6 +42,9 @@ class Booking
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Merci de saisir une adresse email")
+     * @Assert\Email(message="L'adresse email '{{ value }}' n'est pas valide.", checkMX = true)
      */
     private $email;
 
@@ -54,6 +59,12 @@ class Booking
      * @var \DateTime
      *
      * @ORM\Column(name="ticketDate", type="datetime")
+     *
+     * @Assert\NotBlank(message="Merci de saisir une date")
+     * @Assert\DateTime(message="Cette date n'est pas valide")
+     * @Assert\GreaterThanOrEqual(value="today", message="La date ne peut pas être antérieure à aujourd'hui.")
+     *
+     * @VerifyDate()
      */
     private $ticketDate;
 
@@ -61,6 +72,9 @@ class Booking
      * @var int
      *
      * @ORM\Column(name="totalNbTickets", type="integer")
+     *
+     * @Assert\NotBlank(message="Merci de saisir le nombre de billet(s) souhaité")
+     * @Assert\GreaterThanOrEqual(value="1", message="Vous devez choisir au moins un billet")
      */
     private $totalNbTickets;
 

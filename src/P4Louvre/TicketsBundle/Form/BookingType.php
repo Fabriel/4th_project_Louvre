@@ -29,7 +29,11 @@ class BookingType extends AbstractType
                     '1/2 journée'=> false
                 )
             ))
-            ->add('totalNbTickets', IntegerType::class);
+            ->add('totalNbTickets', IntegerType::class, array(
+                'attr' => array(
+                    'min' => 1
+                )
+            ));
     }
     
     /**
