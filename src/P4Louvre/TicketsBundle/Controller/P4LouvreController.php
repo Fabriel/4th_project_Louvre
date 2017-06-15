@@ -35,13 +35,11 @@ class P4LouvreController extends Controller
     {
         $booking = new Booking();
         $form   = $this->get('form.factory')->create(BookingType::class, $booking);
-        $ref = $this->randomStr(10);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $ref = substr($booking->getEmail(), 0, 5) . '-' . $ref;
-            $booking->setCommandReference($ref);
             $booking->setTotalPrice(0);
+            $booking->setCommandReference('');
             $em->persist($booking);
             $em->flush();
 
@@ -66,16 +64,19 @@ class P4LouvreController extends Controller
         $ticketDate = $booking->getTicketDate();
 
         for($i = 1 ; $i <= $nbVisitors; $i++) {
-            ${'visitor'.$i} = new Visitors();
-            ${'visitor'.$i}->setName('visitor'.$i);
-            ${'visitor'.$i}->setBooking($booking);
-            ${'visitor'.$i}->setTicketDate($ticketDate);
-            $booking->addVisitor(${'visitor'.$i});
+            ${'visitor'.$i.'_b'.$id} = new Visitors();
+            ${'visitor'.$i.'_b'.$id}->setName('visitor'.$i.'_b'.$id);
+            ${'visitor'.$i.'_b'.$id}->setBooking($booking);
+            ${'visitor'.$i.'_b'.$id}->setTicketDate($ticketDate);
+            $booking->addVisitor(${'visitor'.$i.'_b'.$id});
         }
 
         $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $ref = $this->randomStr(10);
+            $ref = substr( ${'visitor1_b'.$id}->getVisitorName(), 0, 3) . '-' . $ref;
+            $booking->setCommandReference($ref);
             $em->persist($booking);
             $visitors = $booking->getVisitors();
 

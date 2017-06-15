@@ -169,7 +169,7 @@ class Visitors
      */
     public function setVisitorName($visitorName)
     {
-        $this->visitorName = $visitorName;
+        $this->visitorName = strtoupper($visitorName);
 
         return $this;
     }
