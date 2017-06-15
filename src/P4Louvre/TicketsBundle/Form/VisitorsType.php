@@ -26,7 +26,7 @@ class VisitorsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'P4Louvre\TicketsBundle\Entity\Visitors'
+            'data_class' => 'P4Louvre\TicketsBundle\Entity\Booking'
         ));
     }
 
