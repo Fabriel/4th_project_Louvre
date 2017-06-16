@@ -39,7 +39,7 @@ class Visitors
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ticketDate", type="datetime")
+     * @ORM\Column(name="ticketDate", type="date")
      */
     private $ticketDate;
 
@@ -60,9 +60,9 @@ class Visitors
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="visitorDob", type="datetime")
+     * @ORM\Column(name="visitorDob", type="date")
      *
-     * @Assert\DateTime(message="Cette date n'est pas valide")
+     * @Assert\Date(message="Cette date n'est pas valide")
      */
     private $visitorDob;
 
@@ -285,4 +285,3 @@ class Visitors
         return $this->reduceTicket;
     }
 }
-

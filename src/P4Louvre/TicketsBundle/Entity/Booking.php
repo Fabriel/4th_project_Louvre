@@ -28,7 +28,7 @@ class Booking
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="commandDate", type="datetime")
+     * @ORM\Column(name="commandDate", type="date")
      */
     private $commandDate;
 
@@ -58,10 +58,10 @@ class Booking
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="ticketDate", type="datetime")
+     * @ORM\Column(name="ticketDate", type="date")
      *
      * @Assert\NotBlank(message="Merci de saisir une date")
-     * @Assert\DateTime(message="Cette date n'est pas valide")
+     * @Assert\Date(message="Cette date n'est pas valide")
      * @Assert\GreaterThanOrEqual(value="today", message="La date ne peut pas être antérieure à aujourd'hui.")
      *
      * @VerifyDate()
@@ -313,4 +313,3 @@ class Booking
         return $this->totalPrice;
     }
 }
-
