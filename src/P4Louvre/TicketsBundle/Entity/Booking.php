@@ -26,9 +26,9 @@ class Booking
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \DateTimee
      *
-     * @ORM\Column(name="commandDate", type="date")
+     * @ORM\Column(name="commandDate", type="datetime")
      */
     private $commandDate;
 
