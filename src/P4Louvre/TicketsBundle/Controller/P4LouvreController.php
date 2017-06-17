@@ -4,8 +4,8 @@ namespace P4Louvre\TicketsBundle\Controller;
 
 use P4Louvre\TicketsBundle\Entity\Booking;
 use P4Louvre\TicketsBundle\Entity\Visitors;
-use P4Louvre\TicketsBundle\Form\BookingType;
-use P4Louvre\TicketsBundle\Form\VisitorsType;
+use P4Louvre\TicketsBundle\Form\Type\BookingType;
+use P4Louvre\TicketsBundle\Form\Type\VisitorsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +34,12 @@ class P4LouvreController extends Controller
     public function bookingAction(Request $request)
     {
         $booking = new Booking();
-        $form   = $this->get('form.factory')->create(BookingType::class, $booking);
+        $form = $this->get('form.factory')->create(BookingType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $booking->setTotalPrice(0);
-            $ref = $this->randomStr(5);
+            $ref = $this->randomStrAction(5);
             $booking->setCommandReference($ref);
             $em->persist($booking);
             $em->flush();
@@ -75,7 +75,7 @@ class P4LouvreController extends Controller
         $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $ref = $this->randomStr(10);
+            $ref = $this->randomStrAction(10);
             $ref = substr( ${'visitor1_b'.$id}->getVisitorName(), 0, 3) . '-' . $ref;
             $booking->setCommandReference($ref);
             $em->persist($booking);
@@ -140,7 +140,7 @@ class P4LouvreController extends Controller
      *
      * @return string
      */
-    public function randomStr($number) {
+    public function randomStrAction($number) {
         $ref = date('Ymd') . '-';
         $string = 'A0B1C2D3E4F5G6H7I8J9K0L1M2N3O4P5Q6R7S8U9T0V4W5X6Y7Z5a6b7c8d9e0f1g2h3i4j5k6l7m8n9o0p1q2r3s4t5u6v7w8x9y0z1';
         $nbChars = strlen($string);
