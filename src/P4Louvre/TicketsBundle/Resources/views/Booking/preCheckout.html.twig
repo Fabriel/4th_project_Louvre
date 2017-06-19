@@ -1,0 +1,44 @@
+{% extends "P4LouvreTicketsBundle::layout.html.twig" %}
+{% set bookingPage = true %}
+
+{% block title %}{{ parent () }} - Validation de la commande{% endblock %}
+
+{% block content %}
+
+    <div class="inner cover">
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <h1>Validation de la commande</h1>
+
+        <div class="lead" style="text-align: center;">
+
+        Vous êtes sur le point de procéder au règlement de votre commande,<br />
+            d'un montant total de {{ booking.totalPrice }} €.<br />
+            <br />
+
+        <form action="{{ path('p4_louvre_booking_checkout',  {'id': bookingId}) }}" method="POST">
+            <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_Eq0x5NWd3hFjdyXbZsELzmdl"
+                    data-amount="{{ booking.totalPrice * 100 }}"
+                    data-name="Paiement Stripe"
+                    data-description="Réservation Louvre"
+                    data-locale="auto"
+                    data-currency="eur">
+            </script>
+        </form>
+
+        <br />
+
+        <div class="row">
+            <p style="text-align: center;">
+                <a href="{{ path('p4_louvre_booking_cancel', {'id': bookingId}) }}" class="btn btn-lg btn-default">Annuler la commande</a>
+            </p>
+        </div>
+
+{% endblock %}

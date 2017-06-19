@@ -6,6 +6,9 @@ use P4Louvre\TicketsBundle\Entity\Booking;
 use P4Louvre\TicketsBundle\Entity\Visitors;
 use P4Louvre\TicketsBundle\Form\Type\BookingType;
 use P4Louvre\TicketsBundle\Form\Type\VisitorsType;
+use Stripe\Charge;
+use Stripe\Error\Card;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +37,12 @@ class P4LouvreController extends Controller
     public function bookingAction(Request $request)
     {
         $booking = new Booking();
-        $form = $this->get('form.factory')->create(BookingType::class, $booking);
+        $form   = $this->get('form.factory')->create(BookingType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $booking->setTotalPrice(0);
-            $ref = $this->randomStrAction(5);
+            $ref = $this->randomStr(5);
             $booking->setCommandReference($ref);
             $em->persist($booking);
             $em->flush();
@@ -75,7 +78,7 @@ class P4LouvreController extends Controller
         $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $ref = $this->randomStrAction(10);
+            $ref = $this->randomStr(10);
             $ref = substr( ${'visitor1_b'.$id}->getVisitorName(), 0, 3) . '-' . $ref;
             $booking->setCommandReference($ref);
             $em->persist($booking);
@@ -101,20 +104,64 @@ class P4LouvreController extends Controller
         return $this->render('P4LouvreTicketsBundle:Booking:visitors.html.twig', array(
             'form' => $form->createView(),
             'nbVisitors' => $nbVisitors,
-            'bookingId' => $id));
+            'bookingId' => $id
+        ));
     }
 
     /**
      * @Route("/booking/summary/{id}", name="p4_louvre_booking_summary/id")
      */
-    public function summaryAction($id, Request $request)
+    public function summaryAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
 
         return $this->render('P4LouvreTicketsBundle:Booking:summary.html.twig', array(
             'booking' => $booking,
-            'bookingId' => $id));
+            'bookingId' => $id
+        ));
+    }
+
+    /**
+     * @Route("/booking/pre-checkout/{id}", name="p4_louvre_booking_pre_checkout")
+     */
+    public function preCheckoutAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+
+        return $this->render('P4LouvreTicketsBundle:Booking:preCheckout.html.twig', array(
+            'booking' => $booking,
+            'bookingId' => $id
+        ));
+    }
+
+    /**
+     * @Route("/booking/checkout/{id}", name="p4_louvre_booking_checkout")
+     */
+    public function checkoutAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+        $price = $booking->getTotalPrice();
+        Stripe::setApiKey('sk_test_ngJqB6Hs03miplo3Xfjuz4xV');
+
+        $token = $_POST['stripeToken'];
+
+        try
+        {
+            $charge = Charge::create(array(
+                'amount' => $price * 100,
+                'currency' => 'eur',
+                'source' => $token,
+                'description' => 'Paiement Stripe - Réservation Louvre'
+            ));
+            $this->addFlash('info','Votre paiement a été accepté, votre commande est donc validée.');
+            return $this->redirectToRoute('p4_louvre_homepage');
+        } catch(Card $e) {
+            $this->addFlash('info','Votre paiement a été rejeté.');
+            return $app->redirect($_SERVER['HTTP_REFERER']);;
+        }
     }
 
     /**
@@ -140,7 +187,7 @@ class P4LouvreController extends Controller
      *
      * @return string
      */
-    public function randomStrAction($number) {
+    public function randomStr($number) {
         $ref = date('Ymd') . '-';
         $string = 'A0B1C2D3E4F5G6H7I8J9K0L1M2N3O4P5Q6R7S8U9T0V4W5X6Y7Z5a6b7c8d9e0f1g2h3i4j5k6l7m8n9o0p1q2r3s4t5u6v7w8x9y0z1';
         $nbChars = strlen($string);
