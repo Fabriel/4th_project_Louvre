@@ -42,7 +42,7 @@ class P4LouvreController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $booking->setTotalPrice(0);
-            $ref = $this->randomStr(5);
+            $ref = $this->randomStrAction(5);
             $booking->setCommandReference($ref);
             $em->persist($booking);
             $em->flush();
@@ -78,7 +78,7 @@ class P4LouvreController extends Controller
         $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $ref = $this->randomStr(10);
+            $ref = $this->randomStrAction(10);
             $ref = substr( ${'visitor1_b'.$id}->getVisitorName(), 0, 3) . '-' . $ref;
             $booking->setCommandReference($ref);
             $em->persist($booking);
@@ -187,7 +187,7 @@ class P4LouvreController extends Controller
      *
      * @return string
      */
-    public function randomStr($number) {
+    public function randomStrAction($number) {
         $ref = date('Ymd') . '-';
         $string = 'A0B1C2D3E4F5G6H7I8J9K0L1M2N3O4P5Q6R7S8U9T0V4W5X6Y7Z5a6b7c8d9e0f1g2h3i4j5k6l7m8n9o0p1q2r3s4t5u6v7w8x9y0z1';
         $nbChars = strlen($string);
