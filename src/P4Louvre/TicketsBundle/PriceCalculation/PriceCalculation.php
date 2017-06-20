@@ -23,7 +23,7 @@ class PriceCalculation
         $date = $booking->getTicketDate();
         $ticketType = $booking->getTicketType();
 
-        $age = ($dob->diff($date))->y;
+        $age = $dob->diff($date)->format('%y');
 
         if ($reduceTicket == 1) {
             $ticketPrice = 10;
