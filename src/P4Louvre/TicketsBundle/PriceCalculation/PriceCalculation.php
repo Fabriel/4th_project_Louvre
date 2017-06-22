@@ -37,10 +37,10 @@ class PriceCalculation
             } elseif ($age >= 60) {
                 $ticketPrice = 12;
             }
+        }
 
-            if ($ticketType == 0) {
-                $ticketPrice = $ticketPrice / 2;
-            }
+        if ($ticketType == 0) {
+            $ticketPrice = $ticketPrice / 2;
         }
 
         return $ticketPrice;
@@ -55,7 +55,7 @@ class PriceCalculation
         $totalPrice = $booking->getTotalPrice();
 
         foreach ($visitors as $visitor) {
-            $totalPrice += $this->ticketPriceCalculation($visitor->getId());
+            $totalPrice += $visitor->getTicketPrice();
         }
 
         return $totalPrice;
