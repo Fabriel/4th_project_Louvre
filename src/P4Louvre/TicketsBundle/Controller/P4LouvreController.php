@@ -9,6 +9,7 @@ use P4Louvre\TicketsBundle\Form\Type\VisitorsType;
 use Stripe\Charge;
 use Stripe\Error\Card;
 use Stripe\Stripe;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,6 +47,7 @@ class P4LouvreController extends Controller
             $booking->setCommandReference($ref);
             $em->persist($booking);
             $em->flush();
+            $request->getSession()->set('step1', $booking);
 
             $request->getSession()->getFlashBag()->add('info', 'Veuillez renseigner le formulaire ci-dessous pour finaliser votre commande.');
 
@@ -62,106 +64,152 @@ class P4LouvreController extends Controller
      */
     public function visitorsAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
-        $nbVisitors = $booking->getTotalNbTickets();
-        $ticketDate = $booking->getTicketDate();
+        $step1 = $request->getSession()->get('step1');
+        if(!empty($step1)) {
+            $em = $this->getDoctrine()->getManager();
+            $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+            $nbVisitors = $booking->getTotalNbTickets();
+            $ticketDate = $booking->getTicketDate();
 
-        for($i = 1 ; $i <= $nbVisitors; $i++) {
-            ${'visitor'.$i.'_b'.$id} = new Visitors();
-            ${'visitor'.$i.'_b'.$id}->setName('visitor'.$i.'_b'.$id);
-            ${'visitor'.$i.'_b'.$id}->setBooking($booking);
-            ${'visitor'.$i.'_b'.$id}->setTicketDate($ticketDate);
-            $booking->addVisitor(${'visitor'.$i.'_b'.$id});
-        }
-
-        $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $ref = $this->randomStrAction(10);
-            $ref = substr( ${'visitor1_b'.$id}->getVisitorName(), 0, 3) . '-' . $ref;
-            $booking->setCommandReference($ref);
-            $em->persist($booking);
-            $visitors = $booking->getVisitors();
-
-            foreach($visitors as $visitor) {
-                $em->persist($visitor);
+            for ($i = 1; $i <= $nbVisitors; $i++) {
+                ${'visitor' . $i . '_b' . $id} = new Visitors();
+                ${'visitor' . $i . '_b' . $id}->setName('visitor' . $i . '_b' . $id);
+                ${'visitor' . $i . '_b' . $id}->setBooking($booking);
+                ${'visitor' . $i . '_b' . $id}->setTicketDate($ticketDate);
+                ${'visitor' . $i . '_b' . $id}->setTicketPrice(0);
+                $booking->addVisitor(${'visitor' . $i . '_b' . $id});
             }
 
-            $em->flush();
+            $form = $this->get('form.factory')->create(VisitorsType::class, $booking);
 
-            $priceCalculation = $this->get('p4_louvre_tickets.ticketprice');
-            $totalPrice = $priceCalculation->totalPriceCalculation($booking);
-            $booking->setTotalPrice($totalPrice);
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $ref = $this->randomStrAction(10);
+                $ref = substr(${'visitor1_b' . $id}->getVisitorName(), 0, 3) . '-' . $ref;
+                $booking->setCommandReference($ref);
+                $em->persist($booking);
+                $visitors = $booking->getVisitors();
 
-            $em->flush();
+                $priceCalculation = $this->get('p4_louvre_tickets.ticketprice');
 
-            $request->getSession()->getFlashBag()->add('info', 'Veuillez vérifier votre commande et procéder au règlement.');
+                foreach ($visitors as $visitor) {
+                    $em->persist($visitor);
+                    $em->flush();
+                    $ticketPrice = $priceCalculation->ticketPriceCalculation($visitor);
+                    $visitor->setTicketPrice($ticketPrice);
+                    $em->persist($visitor);
+                }
 
-            return $this->redirectToRoute('p4_louvre_booking_summary/id', array('id' => $booking->getId()));
+                $totalPrice = $priceCalculation->totalPriceCalculation($booking);
+                $booking->setTotalPrice($totalPrice);
+
+                $em->flush();
+
+                $request->getSession()->set('step2', $booking);
+
+                $request->getSession()->getFlashBag()->add('info', 'Veuillez vérifier votre commande avant de procéder au règlement.');
+
+                return $this->redirectToRoute('p4_louvre_booking_summary/id', array('id' => $booking->getId()));
+            }
+
+            return $this->render('P4LouvreTicketsBundle:Booking:visitors.html.twig', array(
+                'form' => $form->createView(),
+                'nbVisitors' => $nbVisitors,
+                'bookingId' => $id
+            ));
         }
 
-        return $this->render('P4LouvreTicketsBundle:Booking:visitors.html.twig', array(
-            'form' => $form->createView(),
-            'nbVisitors' => $nbVisitors,
-            'bookingId' => $id
-        ));
+        return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
 
     /**
      * @Route("/booking/summary/{id}", name="p4_louvre_booking_summary/id")
      */
-    public function summaryAction($id)
+    public function summaryAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+        $step2 = $request->getSession()->get('step2');
+        if(!empty($step2)) {
+            $em = $this->getDoctrine()->getManager();
+            $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
 
-        return $this->render('P4LouvreTicketsBundle:Booking:summary.html.twig', array(
-            'booking' => $booking,
-            'bookingId' => $id
-        ));
+            $request->getSession()->set('step3', $booking);
+
+            return $this->render('P4LouvreTicketsBundle:Booking:summary.html.twig', array(
+                'booking' => $booking,
+                'bookingId' => $id
+            ));
+        }
+
+        return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
 
     /**
      * @Route("/booking/pre-checkout/{id}", name="p4_louvre_booking_pre_checkout")
      */
-    public function preCheckoutAction($id)
+    public function preCheckoutAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+        $step3 = $request->getSession()->get('step3');
+        if(!empty($step3)) {
+            $em = $this->getDoctrine()->getManager();
+            $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
 
-        return $this->render('P4LouvreTicketsBundle:Booking:preCheckout.html.twig', array(
-            'booking' => $booking,
-            'bookingId' => $id
-        ));
+            $request->getSession()->set('step4', $booking);
+
+            return $this->render('P4LouvreTicketsBundle:Booking:preCheckout.html.twig', array(
+                'booking' => $booking,
+                'bookingId' => $id
+            ));
+        }
+
+        return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
 
     /**
      * @Route("/booking/checkout/{id}", name="p4_louvre_booking_checkout")
      */
-    public function checkoutAction($id)
+    public function checkoutAction($id, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
-        $price = $booking->getTotalPrice();
-        Stripe::setApiKey('sk_test_ngJqB6Hs03miplo3Xfjuz4xV');
+        $step4 = $request->getSession()->get('step4');
+        if(!empty($step4)) {
+            $em = $this->getDoctrine()->getManager();
+            $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+            $price = $booking->getTotalPrice();
+            Stripe::setApiKey('sk_test_ngJqB6Hs03miplo3Xfjuz4xV');
 
-        $token = $_POST['stripeToken'];
+            $token = $_POST['stripeToken'];
 
-        try
-        {
-            $charge = Charge::create(array(
-                'amount' => $price * 100,
-                'currency' => 'eur',
-                'source' => $token,
-                'description' => 'Paiement Stripe - Réservation Louvre'
-            ));
-            $this->addFlash('info','Votre paiement a été accepté, votre commande est donc validée.');
-            return $this->redirectToRoute('p4_louvre_homepage');
-        } catch(Card $e) {
-            $this->addFlash('info','Votre paiement a été rejeté.');
-            return $app->redirect($_SERVER['HTTP_REFERER']);;
+            try {
+                $charge = Charge::create(array(
+                    'amount' => $price * 100,
+                    'currency' => 'eur',
+                    'source' => $token,
+                    'description' => 'Paiement Stripe - Réservation Louvre'
+                ));
+                $message = new Swift_Message();
+                $message->setSubject('Vos billets pour le Musée du Louvre')
+                    ->setFrom(array('fabrice.loubier@gmail.com' => 'Billetterie du Musée du Louvre'))
+                    ->setTo($booking->getEmail())
+                    ->setContentType('text/html')
+                    ->setCharset('utf-8')
+                    ->setBody(
+                        $this->renderView(
+                            '@P4LouvreTickets/Emails/registration.html.twig',
+                            array(
+                                'booking' => $booking,
+                                'visitors' => $booking->getVisitors()
+                            )
+                        ));
+                $this->get('mailer')->send($message);
+
+                $this->addFlash('info', 'Votre paiement a été accepté et votre commande est validée.');
+                return $this->redirectToRoute('p4_louvre_homepage');
+            } catch (Card $e) {
+                $this->addFlash('info', 'Votre paiement a été rejeté, merci de réessayer.');
+                return $app->redirect($_SERVER['HTTP_REFERER']);;
+            }
         }
+
+        return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
+
     }
 
     /**

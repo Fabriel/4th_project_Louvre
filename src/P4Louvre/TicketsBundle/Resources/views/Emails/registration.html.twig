@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body
+        {
+            background: url('{{ absolute_url(asset('img/louvre.jpg')) }}') no-repeat center fixed;
+            background-size: cover;
+            font-family: "Times New Roman", Times, serif;
+            font-size: 1.67em;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,.5);
+        }
+
+        .text_email
+        {
+            padding: 10px;
+            background-color: rgba(45,53,90,0.75);
+        }
+
+        .infos
+        {
+            margin: 0 10px 0 10px;
+            border: solid 1px;
+        }
+
+        @media (max-width: 767px) {
+            .infos {
+                text-align: center;
+            }
+    </style>
+</head>
+
+<body>
+<div class="container" style="max-width: 800px;">
+    <br />
+    <div>
+        <img src="{{ absolute_url(asset('img/logo_louvre.jpg')) }}">
+
+        <span style="float: right;"><img src="{{ absolute_url(asset('img/logo_text.jpg')) }}"></span>
+    </div>
+    <br />
+    <div class="text_email">
+        <p style="text-align: center;">
+            Madame/Monsieur,
+        </p>
+        <br />
+        <p style="text-align: justify;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suite à votre commande du {{ booking.commandDate|date('d/m/Y') }}, veuillez trouver ci-dessous l'ensemble des éléments vous permettant
+            d'accéder au Musée.
+        </p>
+        <br />
+        <div class="infos">
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                <strong><u>Référence de la commande</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.commandReference }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                <strong><u>Date de la visite</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.ticketDate|date('d/m/Y') }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <strong><u>Nombre de visiteur(s)</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.totalNbTickets }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                <strong><u>Type de billet(s)</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                {% if booking.ticketType == 0 %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demi-journée{% else %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Journée{% endif %}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                <strong><u>Montant total de la commande</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.totalPrice }} €
+                </div>
+            </section>
+            <br /><br />
+
+            <p style="text-align: center;">
+                <strong><em><u>Identité des visiteurs</u></em></strong> :
+            </p>
+            <br />
+            {% for visitor in visitors %}
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <u>Prénom</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorFirstName }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <u>Nom</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorName }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <u>Date de naissance</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorDob|date('d/m/Y') }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <u>Pays de résidence</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorCountry }}
+                </div>
+            </section>
+            <br />
+            <section class="row">
+                <div class="col-sm-6" style="text-align: right;">
+                    <u>Tarif du billet</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="col-sm-6">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.ticketPrice }} €
+                </div>
+            </section>
+            <br />
+
+            {% if visitor.reduceTicket == 1 %}
+                <p style="text-align: center;">
+                    <span class="glyphicon glyphicon-warning-sign"></span>
+                    <em>Tarif réduit (<u>un justificatif sera demandé à l'entrée du Musée</u>)</em>
+                </p>
+                <br/><br />
+            {% endif %}
+
+            {% if not loop.last %}
+            <p style="text-align: center;">
+                ______________________________
+            </p>
+            <br/>
+            {% endif %}
+
+            {% endfor %}
+            <br /><br />
+        </div>
+        <br />
+        <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nous vous souhaitons une agréable visite du Musée.
+            <br /><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cordialement.
+        </p>
+
+        <p>
+            <span style="float: right;"><em>L'équipe de la billetterie du Louvre</em></span>
+        </p>
+        <br />
+    </div>
+</div>
+</body>
+</html>
