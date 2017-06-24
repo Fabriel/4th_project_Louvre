@@ -2,6 +2,7 @@
 
 namespace P4Louvre\TicketsBundle\Controller;
 
+use DateTime;
 use P4Louvre\TicketsBundle\Entity\Booking;
 use P4Louvre\TicketsBundle\Entity\Visitors;
 use P4Louvre\TicketsBundle\Form\Type\BookingType;
@@ -42,6 +43,16 @@ class P4LouvreController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $post = $_POST['p4louvre_ticketsbundle_booking'];
+            $date = DateTime::createFromFormat('d/m/Y', $post['ticketDate'])->format('Y-m-d');
+            $nbTicketsSold = $em->getRepository('P4LouvreTicketsBundle:Booking')->findNbTicketsByDate($date);
+
+            if((intval($nbTicketsSold) + intval($post['totalNbTickets'])) > 1000)
+            {
+                $request->getSession()->getFlashBag()->add('info', 'Tous les billets ont été vendus pour cette date, veuillez en choisir une autre.');
+                return $this->redirect($_SERVER['HTTP_REFERER']);;
+            }
+
             $booking->setTotalPrice(0);
             $ref = $this->randomStrAction(5);
             $booking->setCommandReference($ref);
@@ -202,10 +213,11 @@ class P4LouvreController extends Controller
                 $this->addFlash('info', 'Votre paiement a été accepté et votre commande est validée.');
                 $booking->setPaid(true);
                 $em->flush();
+                $request->getSession()->clear();
                 return $this->redirectToRoute('p4_louvre_homepage');
             } catch (Card $e) {
                 $this->addFlash('info', 'Votre paiement a été rejeté, merci de réessayer.');
-                return $app->redirect($_SERVER['HTTP_REFERER']);;
+                return $this->redirect($_SERVER['HTTP_REFERER']);;
             }
         }
 
@@ -223,6 +235,8 @@ class P4LouvreController extends Controller
 
         $em->remove($booking);
         $em->flush();
+
+        $request->getSession()->clear();
 
         $request->getSession()->getFlashBag()->add('info', 'Votre commande a bien été annulée.');
 

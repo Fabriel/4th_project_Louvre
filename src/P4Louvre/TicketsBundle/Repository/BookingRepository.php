@@ -10,4 +10,18 @@ namespace P4Louvre\TicketsBundle\Repository;
  */
 class BookingRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findNbTicketsByDate($date)
+    {
+        $qb = $this->createQueryBuilder('b');
+        $qb
+            ->select('COUNT(b.totalNbTickets)')
+            ->where('b.ticketDate = :date')
+            ->andWhere('b.paid = true')
+            ->setParameter('date', $date)
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

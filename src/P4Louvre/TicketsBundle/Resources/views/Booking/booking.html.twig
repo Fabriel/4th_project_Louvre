@@ -6,6 +6,13 @@
 {% block content %}
 
     <div class="inner cover">
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
         <h1>Achat de billets</h1>
 
         <div class="lead" style="text-align: center;">
