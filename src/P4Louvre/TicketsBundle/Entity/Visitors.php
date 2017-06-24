@@ -69,7 +69,7 @@ class Visitors
     /**
      * @var string
      *
-     * @ORM\Column(name="visitorCountry", type="string", length=10)
+     * @ORM\Column(name="visitorCountry", type="string", length=2)
      *
      * @Assert\Country()
      */

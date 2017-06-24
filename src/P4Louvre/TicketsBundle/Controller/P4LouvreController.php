@@ -199,8 +199,9 @@ class P4LouvreController extends Controller
                             )
                         ));
                 $this->get('mailer')->send($message);
-
                 $this->addFlash('info', 'Votre paiement a été accepté et votre commande est validée.');
+                $booking->setPaid(true);
+                $em->flush();
                 return $this->redirectToRoute('p4_louvre_homepage');
             } catch (Card $e) {
                 $this->addFlash('info', 'Votre paiement a été rejeté, merci de réessayer.');

@@ -6,3 +6,7 @@ services:
         class: P4Louvre\TicketsBundle\PriceCalculation\PriceCalculation
         arguments:
             - "@doctrine.orm.entity_manager"
+    alaczi.twig.country_extension:
+        class: alaczi\Twig\Extension\CountryExtension
+        tags:
+            - { name: twig.extension }
