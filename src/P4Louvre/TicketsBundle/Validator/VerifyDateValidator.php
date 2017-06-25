@@ -29,7 +29,7 @@ class VerifyDateValidator extends ConstraintValidator
             $this->context->addViolation($constraint->messageNovember);
         } elseif($dateAndMonth == '25/12') {
             $this->context->addViolation($constraint->messageXmas);
-        } elseif($today == $completeDate && strcmp($now, '12:00:00') > 0) {
+        } elseif($today == $completeDate && strcmp($now, '14:00:00') > 0) {
             $this->context->addViolation($constraint->messageDay);
         }
     }
