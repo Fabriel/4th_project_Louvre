@@ -22,6 +22,10 @@ class P4LouvreController extends Controller
      */
     public function indexAction()
     {
+        $purger = $this->get('p4_louvre_tickets.purger');
+        $days = 1;
+        $purger->purge($days);
+
         return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
 

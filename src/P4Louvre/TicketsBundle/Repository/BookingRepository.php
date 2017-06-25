@@ -1,6 +1,7 @@
 <?php
 
 namespace P4Louvre\TicketsBundle\Repository;
+use DateTime;
 
 /**
  * BookingRepository
@@ -20,6 +21,17 @@ class BookingRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('date', $date)
         ;
         return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function getBookingsUnpaidBefore(DateTime $date)
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.commandDate <= :date')
+            ->andWhere('b.paid = false')
+            ->setParameter('date', $date)
             ->getQuery()
             ->getResult()
             ;
