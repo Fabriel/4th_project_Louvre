@@ -26,7 +26,7 @@ class Booking
     private $id;
 
     /**
-     * @var \DateTimee
+     * @var \DateTime
      *
      * @ORM\Column(name="commandDate", type="datetime")
      */
@@ -56,7 +56,7 @@ class Booking
     private $ticketType;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="ticketDate", type="date")
      *
