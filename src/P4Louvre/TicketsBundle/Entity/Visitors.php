@@ -37,7 +37,7 @@ class Visitors
     private $name;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="ticketDate", type="date")
      */
@@ -58,7 +58,7 @@ class Visitors
     private $visitorFirstName;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="visitorDob", type="date")
      *

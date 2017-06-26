@@ -22,10 +22,6 @@ class P4LouvreController extends Controller
      */
     public function indexAction()
     {
-        $purger = $this->get('p4_louvre_tickets.purger');
-        $hour = 1;
-        $purger->purge($hour);
-
         return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
 
@@ -42,6 +38,10 @@ class P4LouvreController extends Controller
      */
     public function bookingAction(Request $request)
     {
+        $purger = $this->get('p4_louvre_tickets.purger');
+        $hour = 1;
+        $purger->purge($hour);
+
         $booking = new Booking();
         $form   = $this->get('form.factory')->create(BookingType::class, $booking);
 
@@ -168,10 +168,28 @@ class P4LouvreController extends Controller
      */
     public function preCheckoutAction($id, Request $request)
     {
+
         $step3 = $request->getSession()->get('step3');
         if(!empty($step3)) {
             $em = $this->getDoctrine()->getManager();
             $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
+            $date = $booking->getTicketDate()->format('Y-m-d');
+            $nbTicketsSold = $em->getRepository('P4LouvreTicketsBundle:Visitors')->findNbTicketsByDate($date);
+
+            if((count($nbTicketsSold) + intval($booking->getTotalNbTickets())) > 1000)
+            {
+                $rest = 1000 - count($nbTicketsSold);
+                if($rest > 0)
+                {
+                    $request->getSession()->getFlashBag()->add('info', 'Depuis le début de votre commande, d\'autres ont été effectuées, 
+                    et il ne reste plus que ' . $rest . ' billet(s) pour cette date.');
+                    $request->getSession()->clear();
+                    return $this->redirectToRoute('p4_louvre_homepage');
+                }
+                $request->getSession()->getFlashBag()->add('info', 'Depuis le début de votre commande, d\'autres ont été finalisées, 
+                et tous les billets ont été vendus pour cette date ; veuillez en choisir une autre.');
+                return $this->redirectToRoute('p4_louvre_homepage');
+            }
 
             $request->getSession()->set('step4', $booking);
 
@@ -220,7 +238,7 @@ class P4LouvreController extends Controller
                             )
                         ));
                 $this->get('mailer')->send($message);
-                $this->addFlash('info', 'Votre paiement a été accepté et votre commande est validée.');
+                $this->addFlash('info', 'Votre paiement a été accepté, votre commande est donc validée et un email vient de vous être envoyé.');
                 $booking->setPaid(true);
                 $em->flush();
                 $request->getSession()->clear();
