@@ -23,8 +23,8 @@ class P4LouvreController extends Controller
     public function indexAction()
     {
         $purger = $this->get('p4_louvre_tickets.purger');
-        $days = 1;
-        $purger->purge($days);
+        $hour = 1;
+        $purger->purge($hour);
 
         return $this->render('P4LouvreTicketsBundle:Booking:index.html.twig');
     }
@@ -49,10 +49,16 @@ class P4LouvreController extends Controller
             $em = $this->getDoctrine()->getManager();
             $post = $_POST['p4louvre_ticketsbundle_booking'];
             $date = DateTime::createFromFormat('d/m/Y', $post['ticketDate'])->format('Y-m-d');
-            $nbTicketsSold = $em->getRepository('P4LouvreTicketsBundle:Booking')->findNbTicketsByDate($date);
+            $nbTicketsSold = $em->getRepository('P4LouvreTicketsBundle:Visitors')->findNbTicketsByDate($date);
 
-            if((intval($nbTicketsSold) + intval($post['totalNbTickets'])) > 1000)
+            if((count($nbTicketsSold) + intval($post['totalNbTickets'])) > 1000)
             {
+                $rest = 1000 - count($nbTicketsSold);
+                if($rest > 0)
+                {
+                    $request->getSession()->getFlashBag()->add('info', 'Il ne reste que ' . $rest . ' billet(s) pour cette date.');
+                    return $this->redirect($_SERVER['HTTP_REFERER']);;
+                }
                 $request->getSession()->getFlashBag()->add('info', 'Tous les billets ont été vendus pour cette date, veuillez en choisir une autre.');
                 return $this->redirect($_SERVER['HTTP_REFERER']);;
             }
