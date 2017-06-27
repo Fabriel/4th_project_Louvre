@@ -19,13 +19,4 @@ $(document).ready(function() {
             '01/05/2020', '01/11/2020', '25/12/2020', '01/05/2021', '01/11/2021', '25/12/2021', '01/05/2022', '01/11/2022', '25/12/2022'],
         autoclose:true
     });
-
-    $('.js-datepicker-dob').datepicker({
-        format: 'dd/mm/yyyy',
-        language: 'fr',
-        weekStart: 1,
-        startDate: '01/01/1915',
-        orientation: 'bottom left',
-        autoclose:true
-    });
 });
