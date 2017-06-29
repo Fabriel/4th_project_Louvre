@@ -238,7 +238,7 @@ class P4LouvreController extends Controller
                             )
                         ));
                 $this->get('mailer')->send($message);
-                $this->addFlash('info', 'Votre paiement a été accepté, votre commande est donc validée et un email vient de vous être envoyé.');
+                $this->addFlash('info', 'Votre paiement a été accepté ; et un email vient de vous être envoyé.');
                 $booking->setPaid(true);
                 $em->flush();
                 $request->getSession()->clear();

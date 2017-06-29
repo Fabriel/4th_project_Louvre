@@ -14,12 +14,12 @@ class Purger
         $this->em = $em;
     }
 
-    public function purge($days)
+    public function purge($hour)
     {
         $bookingRepository = $this->em->getRepository('P4LouvreTicketsBundle:Booking');
 
         $date = new DateTime();
-        $date->modify('-' . $days . 'day');
+        $date->modify('-' . $hour . 'hour');
 
         $listBookings = $bookingRepository->getBookingsUnpaidBefore($date);
 
