@@ -1,185 +1,236 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <style type="text/css">
-        body
-        {
-            background: url('{{ absolute_url(asset('img/louvre.jpg')) }}') no-repeat center fixed;
-            background-size: cover;
-            font-family: "Times New Roman", Times, serif;
-            font-size: 1.67em;
-            color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,.5);
-        }
+<html lang="fr" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;font-size: 10px;-webkit-tap-highlight-color: rgba(0,0,0,0);">
 
-        .text_email
-        {
-            padding: 10px;
-            background-color: rgba(45,53,90,0.75);
-        }
-
-        .infos
-        {
-            margin: 0 10px 0 10px;
-            border: solid 1px;
-        }
-
-        @media (max-width: 767px) {
-            .infos {
-                text-align: center;
-            }
-    </style>
+<head style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+    <meta charset="utf-8" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
 </head>
 
-<body>
-<div class="container" style="max-width: 800px;">
-    <br />
-    <div>
-        <img src="{{ absolute_url(asset('img/logo_louvre.jpg')) }}">
+<body style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+        margin: 0;font-family: &quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size: 14px;line-height: 1.42857143;color: #fff;
+        background-color: rgb(20,40,90)">
+<div class="container" style="max-width: 700px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding-right: 15px;
+        padding-left: 15px;margin-right: auto;margin-left: auto;">
+    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+    <div style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+        <img src="{{ absolute_url(asset('img/logo_louvre.jpg')) }}" alt="logo_louvre" width="166" height="50"
+             style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;border: 0;
+                 vertical-align: middle;page-break-inside: avoid;max-width: 100%!important;">
 
-        <span style="float: right;"><img src="{{ absolute_url(asset('img/logo_text.jpg')) }}"></span>
+        <span style="float: right;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                <img src="{{ absolute_url(asset('img/logo_text.jpg')) }}" alt="louvre_name" width="289" height="50"
+                     style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;border: 0;vertical-align: middle;
+                     page-break-inside: avoid;max-width: 100%!important;">
+            </span>
     </div>
-    <br />
-    <div class="text_email">
-        <p style="text-align: center;">
-            Madame/Monsieur,
+    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+    <div class="text_email" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;padding: 10px;
+            background-color: rgba(45,53,90,0.75);">
+        <p style="text-align: center;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
+            Madame, Monsieur,
         </p>
-        <br />
-        <p style="text-align: justify;">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suite à votre commande du {{ booking.commandDate|date('d/m/Y') }}, veuillez trouver ci-dessous l'ensemble des éléments vous permettant
-            d'accéder au Musée.
+        <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+        <p style="text-align: justify;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suite à votre commande du {{ booking.commandDate|date('d/m/Y') }}, veuillez trouver ci-dessous l'ensemble des éléments
+            vous permettant d'accéder au Musée.
         </p>
-        <br />
-        <div class="infos">
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                <strong><u>Référence de la commande</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+        <div class="infos" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+                    margin: 0 10px 0 10px;border: solid 1px;font-size: 1.25em;">
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+            <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Référence de la commande</u></strong> :
                 </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.commandReference }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                <strong><u>Date de la visite</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.ticketDate|date('d/m/Y') }}
+                <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                    {{ booking.commandReference }}
                 </div>
             </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <strong><u>Nombre de visiteur(s)</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+            <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Date de la visite</u></strong> :
                 </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.totalNbTickets }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                <strong><u>Type de billet(s)</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                {% if booking.ticketType == 0 %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Demi-journée{% else %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Journée{% endif %}
+                <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                    {{ booking.ticketDate|date('d/m/Y') }}
                 </div>
             </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                <strong><u>Montant total de la commande</u></strong> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+            <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Nombre de visiteur(s)</u></strong> :
                 </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ booking.totalPrice }} €
+                <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                    {{ booking.totalNbTickets }}
                 </div>
             </section>
-            <br /><br />
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+            <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Type de billet(s)</u></strong> :
+                </div>
+                <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                    {% if booking.ticketType == 0 %}Demi-journée{% else %}Journée{% endif %}
+                </div>
+            </section>
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+            <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                    <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Montant total de la commande</u></strong> :
+                </div>
+                <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                    {{ booking.totalPrice }} €
+                </div>
+            </section>
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
 
-            <p style="text-align: center;">
-                <strong><em><u>Identité des visiteurs</u></em></strong> :
+            <hr>
+
+            <p style="text-align: center;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
+                <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                    <em style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                        <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Identité des visiteurs</u></em></strong> :
             </p>
-            <br />
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
             {% for visitor in visitors %}
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <u>Prénom</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorFirstName }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <u>Nom</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorName }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <u>Date de naissance</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorDob|date('d/m/Y') }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <u>Pays de résidence</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.visitorCountry|country }}
-                </div>
-            </section>
-            <br />
-            <section class="row">
-                <div class="col-sm-6" style="text-align: right;">
-                    <u>Tarif du billet</u> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="col-sm-6">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ visitor.ticketPrice }} €
-                </div>
-            </section>
-            <br />
+                <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                    <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                        <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                            <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Prénom</u></strong> :
+                    </div>
+                    <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                        {{ visitor.visitorFirstName }}
+                    </div>
+                </section>
+                <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                    <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                        <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                            <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Nom</u></strong> :
+                    </div>
+                    <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                        {{ visitor.visitorName }}
+                    </div>
+                </section>
+                <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                    <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                        <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                            <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Date de naissance</u></strong> :
+                    </div>
+                    <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                        {{ visitor.visitorDob|date('d/m/Y') }}
+                    </div>
+                </section>
+                <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                    <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                        <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                            <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Pays de résidence</u></strong> :
+                    </div>
+                    <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                        {{ visitor.visitorCountry|country }}
+                    </div>
+                </section>
+                <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                <section class="row" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: block;
+                        text-align: center;">
+                    <div class="col-sm-6 label" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;display: inline;
+                            font-size: 85%;font-weight: 700;line-height: 1;color: #fff;text-align: center;white-space: nowrap;
+                            vertical-align: baseline;border-radius: .25em;position: relative;min-height: 1px;">
+                        <strong style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-weight: 700;">
+                            <u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">Tarif du billet</u></strong> :
+                    </div>
+                    <div class="col-sm-6" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;position: relative;
+                            min-height: 1px;">
+                        {{ visitor.ticketPrice }} €
+                    </div>
+                </section>
+                <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
 
-            {% if visitor.reduceTicket == 1 %}
-                <p style="text-align: center;">
-                    <span class="glyphicon glyphicon-warning-sign"></span>
-                    <em>Tarif réduit (<u>un justificatif sera demandé à l'entrée du Musée</u>)</em>
-                </p>
-                <br/><br />
-            {% endif %}
+                {% if visitor.reduceTicket == 1 %}
+                    <p style="text-align: center;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;
+                            margin: 0 0 10px;">
+                            <span class="glyphicon glyphicon-warning-sign" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+                                position: relative;top: 1px;display: inline-block;font-family: 'Glyphicons Halflings';font-style: normal;font-weight: 400;line-height: 1;
+                                -webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;"></span>
+                        <em style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-size: 85%;">
+                            Tarif réduit (<u style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                                un justificatif sera demandé à l'entrée du Musée</u>)</em>
+                    </p>
+                    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"><br style="-webkit-box-sizing: border-box;
+                            -moz-box-sizing: border-box;box-sizing: border-box;">
+                {% endif %}
 
-            {% if not loop.last %}
-            <p style="text-align: center;">
-                ______________________________
-            </p>
-            <br/>
-            {% endif %}
+                {% if not loop.last %}
+                    <p style="text-align: center;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
+                        ______________________________
+                    </p>
+                    <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                {% endif %}
 
             {% endfor %}
-            <br /><br />
+
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"><br style="-webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;box-sizing: border-box;">
         </div>
-        <br />
-        <p>
+        <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+        <p style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nous vous souhaitons une agréable visite du Musée.
-            <br /><br />
+            <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;"><br style="-webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;box-sizing: border-box;">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cordialement.
         </p>
 
-        <p>
-            <span style="float: right;"><em>L'équipe de la billetterie du Louvre</em></span>
+        <p style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;orphans: 3;widows: 3;margin: 0 0 10px;">
+                    <span style="float: right;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+                        <em style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">L'équipe de la billetterie du Louvre</em>
+                    </span>
         </p>
-        <br />
+        <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
+        <br style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;">
     </div>
 </div>
 </body>
