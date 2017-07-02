@@ -44,7 +44,7 @@ class Booking
      * @ORM\Column(name="email", type="string", length=255)
      *
      * @Assert\NotBlank(message="Merci de saisir une adresse email")
-     * @Assert\Email(message="L'adresse email '{{ value }}' n'est pas valide.", checkMX = true)
+     * @Assert\Email(message="L'adresse email {{ value }} n'est pas valide.", checkMX = true)
      */
     private $email;
 
