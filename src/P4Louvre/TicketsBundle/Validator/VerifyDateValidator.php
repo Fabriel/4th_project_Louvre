@@ -19,6 +19,15 @@ class VerifyDateValidator extends ConstraintValidator
         $today = date('d/m/Y');
         $now = date('H:i:s');
 
+        if(isset($_POST['p4louvre_ticketsbundle_booking']))
+        {
+            $post = $_POST['p4louvre_ticketsbundle_booking'];
+            $ticketType = $post['ticketType'];
+            if($today == $completeDate && strcmp($now, '14:00:00') > 0 && $ticketType == 1) {
+                $this->context->addViolation($constraint->messageDay);
+            }
+        }
+
         if($day == 'Sun') {
             $this->context->addViolation($constraint->messageSun);
         } elseif($day == 'Tue') {
@@ -29,8 +38,6 @@ class VerifyDateValidator extends ConstraintValidator
             $this->context->addViolation($constraint->messageNovember);
         } elseif($dateAndMonth == '25/12') {
             $this->context->addViolation($constraint->messageXmas);
-        } elseif($today == $completeDate && strcmp($now, '14:00:00') > 0) {
-            $this->context->addViolation($constraint->messageDay);
         }
     }
 }

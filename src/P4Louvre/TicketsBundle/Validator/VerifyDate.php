@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
 */
 class VerifyDate extends Constraint
 {
-    public $messageInvalidDate = "Cette date n'est pas valide";
+    public $messageInvalidDate = "Cette date n'est pas valide.";
 
     public $messageSun = "L'achat de billets pour le dimanche se fait uniquement au guichet.";
 
