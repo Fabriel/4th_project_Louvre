@@ -10,6 +10,7 @@ use P4Louvre\TicketsBundle\Form\Type\VisitorsType;
 use Stripe\Charge;
 use Stripe\Error\Card;
 use Stripe\Stripe;
+use Swift_Image;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -224,6 +225,7 @@ class P4LouvreController extends Controller
                     'description' => 'Paiement Stripe - Réservation Louvre'
                 ));
                 $message = new Swift_Message();
+                $imgUrl = $message->embed(Swift_Image::fromPath('C:/wamp64/www/P4Louvre/web/img/logo_louvre.jpg'));
                 $message->setSubject('Vos billets pour le Musée du Louvre')
                     ->setFrom(array('fabrice.loubier@gmail.com' => 'Billetterie du Musée du Louvre'))
                     ->setTo($booking->getEmail())
@@ -233,12 +235,13 @@ class P4LouvreController extends Controller
                         $this->renderView(
                             '@P4LouvreTickets/Emails/registration.html.twig',
                             array(
-                                'booking' => $booking,
-                                'visitors' => $booking->getVisitors()
+                                'booking'   => $booking,
+                                'visitors'  => $booking->getVisitors(),
+                                'url'      => $imgUrl,
                             )
                         ));
                 $this->get('mailer')->send($message);
-                $this->addFlash('info', 'Votre paiement a été accepté ; et un email vient de vous être envoyé.');
+                $this->addFlash('info', 'Votre paiement a été accepté ; un email vient de vous être envoyé.');
                 $booking->setPaid(true);
                 $em->flush();
                 $request->getSession()->clear();
