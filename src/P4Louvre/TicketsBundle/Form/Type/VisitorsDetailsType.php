@@ -18,8 +18,16 @@ class VisitorsDetailsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('visitorFirstName',   TextType::class)
-            ->add('visitorName',        TextType::class)
+            ->add('visitorFirstName',   TextType::class, array(
+                'attr' => array(
+                    'placeholder' => 'Lettres, espaces et tirets (au moins 2 caractères)',
+                    'minlength' => 2
+            )))
+            ->add('visitorName',        TextType::class, array(
+                'attr' => array(
+                    'placeholder' => 'Lettres, espaces et tirets (au moins 2 caractères)',
+                    'minlength' => 2
+            )))
             ->add('visitorDob',         DateType::Class, array(
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
