@@ -48,7 +48,7 @@ class P4LouvreController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $post = $_POST['p4louvre_ticketsbundle_booking'];
+            $post = $request->request->get('p4louvre_ticketsbundle_booking');
             $date = DateTime::createFromFormat('d/m/Y', $post['ticketDate'])->format('Y-m-d');
             $nbTicketsSold = $em->getRepository('P4LouvreTicketsBundle:Visitors')->findNbTicketsByDate($date);
 
@@ -214,8 +214,7 @@ class P4LouvreController extends Controller
             $booking = $em->getRepository('P4LouvreTicketsBundle:Booking')->find($id);
             $price = $booking->getTotalPrice();
             Stripe::setApiKey('sk_test_ngJqB6Hs03miplo3Xfjuz4xV');
-
-            $token = $_POST['stripeToken'];
+            $token = $request->request->get('stripeToken');
 
             try {
                 $charge = Charge::create(array(

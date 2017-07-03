@@ -4,6 +4,7 @@ namespace P4Louvre\TicketsBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\HttpFoundation\Request;
 
 class VerifyDateValidator extends ConstraintValidator
 {
@@ -19,9 +20,10 @@ class VerifyDateValidator extends ConstraintValidator
         $today = date('d/m/Y');
         $now = date('H:i:s');
 
-        if(isset($_POST['p4louvre_ticketsbundle_booking']))
+        $request = Request::createFromGlobals();
+        $post = $request->request->get('p4louvre_ticketsbundle_booking');
+        if($post !== null)
         {
-            $post = $_POST['p4louvre_ticketsbundle_booking'];
             $ticketType = $post['ticketType'];
             if($today == $completeDate && strcmp($now, '14:00:00') > 0 && $ticketType == 1) {
                 $this->context->addViolation($constraint->messageDay);
