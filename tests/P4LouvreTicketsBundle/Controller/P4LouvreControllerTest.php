@@ -31,7 +31,7 @@ class P4LouvreControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/booking');
 
-        $form = $crawler->selectButton('Poursuive la commande')->form();
+        $form = $crawler->selectButton('Poursuivre la commande')->form();
         $crawler = $client->submit($form, array(
             'p4louvre_ticketsbundle_booking[ticketDate]'        => '23/11/2017',
             'p4louvre_ticketsbundle_booking[email]'             => 'test@gmail.com',
